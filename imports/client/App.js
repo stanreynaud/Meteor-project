@@ -42,10 +42,11 @@ function App() {
   // 
   const classes = useStyles();
   
-  // Le texte entré par l'utilisateur sera stocké dans ces variables
+  // Variables stockant les entrées de l'utilisateur
   const [url_value, set_url_Value] = React.useState('');
   const [tags_value, set_tags_Value] = React.useState('');
   const [search_tags_value, set_search_tags_Value] = React.useState('');
+  const [search_results, set_search_results] = React.useState([]);
   
   // Expressions régulières pour vérifier ce que l'utilisateur rentre
   const tags_regex = new RegExp("^[a-zA-Z]+(,[a-za-zA-Z]+)*$");
@@ -63,6 +64,7 @@ function App() {
   };
   
   
+  // Fonctions pour ajouter et chercher une image
   const addImage = (event) => {
 	event.preventDefault();
 	
@@ -80,13 +82,16 @@ function App() {
   
   const searchImage = (event) => {
 	if(tags_regex.test(search_tags_value)){
-		// Les tags sont valides, on peut chercher les images
+		set_search_results(test_array);
 	} else {
 		console.log("bad search tags")
 	}
 	
   }
   
+  var test_array = ["https://image.shutterstock.com/image-photo/bright-spring-view-cameo-island-260nw-1048185397.jpg",
+  "https://cdn.futura-sciences.com/buildsv6/images/wide1920/6/5/2/652a7adb1b_98148_01-intro-773.jpg",
+  "https://epn.pevelecarembault.fr/wp-content/uploads/2016/02/photo-numrique.jpg"]
   
   
 
@@ -118,7 +123,7 @@ function App() {
 			<Button className={classes.button} onClick={()=>{addImage(event)}}variant="contained" disableRipple>Save to DB</Button>
 		
 		</div>	
-		<img className={classes.image} src={url_value} alt="Preview" width="500"/>
+		{image_regex.test(url_value)?<img className={classes.image} src={url_value} alt="Preview" width="500"/>:null}
 	</div>
 	
 	
@@ -135,7 +140,15 @@ function App() {
 			
 			<Button className={classes.button} onClick={()=>{searchImage(event)}}variant="contained" disableRipple>Search in DB</Button>
 		</div>
+		<div>
+		{search_results.map((image,index) => {
+			<img className={classes.image} key={index} src={image} alt="Preview" width="500"/>
+			console.log(index,image)
+		})}
+		</div>
 	</div>
+	
+	
 	
 	</>
   );

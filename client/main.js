@@ -1,15 +1,15 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
-
 import {Meteor} from 'meteor/meteor';
 import React from 'react';
-import { render } from 'react-dom';
+import { render } from 'react-dom'
 
-import App from './App'
+import { renderRoutes } from '../imports/client/routes.js';
+import './main.html'
 
-import './main.html';
 
 
-Meteor.startup(()=> {
-	render(<App />,document.getElementById('root'));
+
+Meteor.startup(() => {
+  render(renderRoutes(), document.getElementById('root'));
 });
