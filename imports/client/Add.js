@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 
 import {Images} from '/Images';
 
+
 const useStyles = makeStyles((theme) => ({
   upper: {
     display: 'flex',
@@ -38,15 +39,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function App() {
+function Add(props) {
   // 
   const classes = useStyles();
   
   // Variables stockant les entrées de l'utilisateur
-  const [url_value, set_url_Value] = React.useState('');
-  const [tags_value, set_tags_Value] = React.useState('');
-  const [search_tags_value, set_search_tags_Value] = React.useState('');
-  const [search_results, set_search_results] = React.useState([]);
+  const [url_value, set_url_Value] = React.useState('');	
+  //const [tags_value, set_tags_Value] = React.useState('');
+  
+  let tags_value="";
   
   // Expressions régulières pour vérifier ce que l'utilisateur rentre
   const tags_regex = new RegExp("^[a-zA-Z]+(,[a-za-zA-Z]+)*$");
@@ -57,18 +58,15 @@ function App() {
     set_url_Value(event.target.value);
   };
   const handle_tags_Change = (event) => {
-    set_tags_Value(event.target.value);
+    //set_tags_Value(event.target.value);
+	tags_value=event.target.value;
   };
-  const handle_search_tags_Change = (event) => {
-    set_search_tags_Value(event.target.value);
-  };
-  
   
   // Fonctions pour ajouter et chercher une image
   const addImage = (event) => {
 	event.preventDefault();
-	
 	if(tags_regex.test(tags_value) && image_regex.test(url_value)) {
+		console.log(tags_value)
 		Images.insert({
 			url: url_value,
 			tags: tags_value,
@@ -80,15 +78,6 @@ function App() {
 	console.log(Images.find().fetch());
   }
   
-  const searchImage = (event) => {
-	if(tags_regex.test(search_tags_value)){
-		set_search_results(test_array);
-	} else {
-		console.log("bad search tags")
-	}
-	
-  }
-  
   var test_array = ["https://image.shutterstock.com/image-photo/bright-spring-view-cameo-island-260nw-1048185397.jpg",
   "https://cdn.futura-sciences.com/buildsv6/images/wide1920/6/5/2/652a7adb1b_98148_01-intro-773.jpg",
   "https://epn.pevelecarembault.fr/wp-content/uploads/2016/02/photo-numrique.jpg"]
@@ -97,14 +86,14 @@ function App() {
 
   return (
   <>
+  {console.log("render")}
   <div className={classes.upper}>
 		<div>
 		<h1 className={classes.root}>Upload a new image</h1>
 			<form className={classes.root} noValidate autoComplete="off">
 			  <TextField id="outlined-basic" 
-			  label="Image URL" 
-			  variant="outlined" 
-			  value={url_value} 
+			  label="Image URL"
+			  variant="outlined"
 			  onChange={handle_url_Change}/>
 			</form>
 			
@@ -116,41 +105,15 @@ function App() {
 			  rows={4}
 			  multiline
 			  variant="outlined"
-			  value={tags_value} 
 			  onChange={handle_tags_Change}/>
 			</form>
 			
 			<Button className={classes.button} onClick={()=>{addImage(event)}}variant="contained" disableRipple>Save to DB</Button>
 		
 		</div>	
-		{image_regex.test(url_value)?<img className={classes.image} src={url_value} alt="Preview" width="500"/>:null}
+		{image_regex.test(url_value)?<img className={classes.image} src={url_value} alt="Invalid image URL" width="500"/>:null}
 	</div>
-	
-	
-	<div className={classes.upper} style={{marginTop: 100}}>
-		<div>
-			<h1 className={classes.root}>Search for an image</h1>
-			<form className={classes.root} noValidate autoComplete="off">
-			  <TextField id="outlined-basic" 
-			  label="Search tags" 
-			  variant="outlined" 
-			  value={search_tags_value} 
-			  onChange={handle_search_tags_Change}/>
-			</form>
-			
-			<Button className={classes.button} onClick={()=>{searchImage(event)}}variant="contained" disableRipple>Search in DB</Button>
-		</div>
-		<div>
-		{search_results.map((image,index) => {
-			<img className={classes.image} key={index} src={image} alt="Preview" width="500"/>
-			console.log(index,image)
-		})}
-		</div>
-	</div>
-	
-	
-	
 	</>
   );
 }
-export default App;
+export default Add;
