@@ -1,5 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
@@ -7,31 +13,40 @@ import {Images} from '/Images';
 
 
 const useStyles = makeStyles((theme) => ({
-  upper: {
-    display: 'flex',
-	flexDirection: "row",
-	width: "100%",
-	height: "100%"
-
-  },
   root: {
     display: 'flex',
-	flexDirection: "column",
-    margin: theme.spacing(3),
-    
+	flexDirection: 'column',
+    marginBottom: theme.spacing(2),
+	marginLeft: theme.spacing(1),
+  },
+  grid: {
+    display: 'flex',
+	wrap: 'wrap',
+    marginBottom: theme.spacing(2),
+	marginLeft: theme.spacing(1),
   },
   image: {
     display: 'flex',
-	flexDirection: "column",
-	float: 'right',
+	flexDirection: 'column',
+	float: 'left',
     margin: theme.spacing(3),
 
   },
   button: {
     display: 'flex',
-	flexDirection: "column",
+	flexDirection: 'column',
     margin: theme.spacing(3),
 
+  },
+  card: {
+    display: 'flex',
+	flexDirection: 'column',
+	float: 'left',
+	maxWidth: 200,
+	margin: theme.spacing(1),
+  },
+  media: {
+    height: 140,
   },
   hide: {
     display: 'none',
@@ -43,55 +58,63 @@ function Search(props) {
   const classes = useStyles();
   
   // Variables stockant les entrées de l'utilisateur
-  const [search_results, set_search_results] = React.useState([]);
-  
-  let search_tags_value="";
+  const [search_tags_value, set_search_tags_value] = React.useState("");
   
   // Expressions régulières pour vérifier ce que l'utilisateur rentre
-  const tags_regex = new RegExp("^[a-zA-Z]+(,[a-za-zA-Z]+)*$");
+  const tags_regex = new RegExp("^$|[a-zA-Z]+(,[a-za-zA-Z]+)*$")
+  const valid_search_query = tags_regex.test(search_tags_value)
 
   // Fonctions pour actualiser les variables quand les entrées changent
   const handle_search_tags_Change = (event) => {
-    set_search_tags_Value(event.target.value);
+    set_search_tags_Value(event.target.value)
   };
   
-  const searchImage = (event) => {
-	if(tags_regex.test(search_tags_value)){
-		set_search_results(test_array);
-	} else {
-		console.log("bad search tags")
-	}
-	
+  
+  let search_results = [];
+  if (valid_search_query) {
+	search_results = Images.find().fetch()
   }
-  
-  var test_array = ["https://image.shutterstock.com/image-photo/bright-spring-view-cameo-island-260nw-1048185397.jpg",
-  "https://cdn.futura-sciences.com/buildsv6/images/wide1920/6/5/2/652a7adb1b_98148_01-intro-773.jpg",
-  "https://epn.pevelecarembault.fr/wp-content/uploads/2016/02/photo-numrique.jpg"]
-  
   
 
   return (
-  <>	
-	<div className={classes.upper}>
+  <>
+	<div className={classes.root}>
 		<div>
 			<h1 className={classes.root}>Search for an image</h1>
-			<form className={classes.root} noValidate autoComplete="off">
-			  <TextField id="outlined-basic" 
-			  label="Search tags" 
-			  variant="outlined" 
-			  value={search_tags_value} 
-			  onChange={handle_search_tags_Change}/>
-			</form>
+			<TextField id="outlined-basic"
+				style={{width:"450px"}}
+				className={classes.root}
+				label="Search tags" 
+				variant="outlined" 
+				value={search_tags_value}
+				onChange={(event) => set_search_tags_value(event.target.value)}
+				helperText={valid_search_query?null:"Tags must be words separated by ','"}
+			/>
 			
-			<Button className={classes.button} onClick={()=>{searchImage(event)}}variant="contained" disableRipple>Search in DB</Button>
-		</div>
-		<div>
-		{search_results.map((image,index) => {
-			<img className={classes.image} key={index} src={image} alt="Invalid image URL" width="500"/>
-			console.log(index,image)
-		})}
 		</div>
 	</div>
+		<Grid container className={classes.grid}>
+			{search_results.map(obj => (
+				<Grid item xs={3} className={classes.card} key={obj._id}>
+					<div>
+						<Card>
+							<CardActionArea disableRipple>
+								<CardMedia
+									className={classes.media}
+									image={obj.url?obj.url:"https://previews.123rf.com/images/viktor92/viktor921910/viktor92191000105/132914141-abstract-transparent-background.jpg"}
+								/>
+								<CardContent>
+									<Typography variant="body2" color="textSecondary">
+									  {obj.tags}
+									</Typography>
+								</CardContent>
+							</CardActionArea>
+						</Card>
+					</div>
+				</Grid>
+			))}
+		</Grid>
+	
   </>
   );
 }

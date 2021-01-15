@@ -10,15 +10,12 @@ const useStyles = makeStyles((theme) => ({
   upper: {
     display: 'flex',
 	flexDirection: "row",
-	width: "100%",
-	height: "100%"
-
   },
   root: {
     display: 'flex',
-	flexDirection: "column",
-    margin: theme.spacing(3),
-    
+	flexDirection: 'column',
+    marginBottom: theme.spacing(2),
+	marginLeft: theme.spacing(2),
   },
   image: {
     display: 'flex',
@@ -78,35 +75,27 @@ function Add(props) {
 	console.log(Images.find().fetch());
   }
   
-  var test_array = ["https://image.shutterstock.com/image-photo/bright-spring-view-cameo-island-260nw-1048185397.jpg",
-  "https://cdn.futura-sciences.com/buildsv6/images/wide1920/6/5/2/652a7adb1b_98148_01-intro-773.jpg",
-  "https://epn.pevelecarembault.fr/wp-content/uploads/2016/02/photo-numrique.jpg"]
-  
-  
 
   return (
   <>
-  {console.log("render")}
   <div className={classes.upper}>
-		<div>
+	<div>
 		<h1 className={classes.root}>Upload a new image</h1>
-			<form className={classes.root} noValidate autoComplete="off">
-			  <TextField id="outlined-basic" 
+			<TextField
+			  className={classes.root}
 			  label="Image URL"
 			  variant="outlined"
-			  onChange={handle_url_Change}/>
-			</form>
+			  onChange={handle_url_Change}
+			/>
 			
-			
-			<form className={classes.root} noValidate autoComplete="off">
-			  <TextField
-			  id="outlined-textarea"
+			<TextField
+			  className={classes.root}
 			  label="Image tags"
 			  rows={4}
 			  multiline
 			  variant="outlined"
-			  onChange={handle_tags_Change}/>
-			</form>
+			  onChange={handle_tags_Change}
+			/>
 			
 			<Button className={classes.button} onClick={()=>{addImage(event)}}variant="contained" disableRipple>Save to DB</Button>
 		
