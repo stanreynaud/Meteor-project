@@ -36,16 +36,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+const img = {
+  name: 'My list',
+  tagsArray: 3
+};
+
+Images.schema.validate(img);
+
+
 function Add(props) {
-  // 
+  //
   const classes = useStyles();
-  
+
   // Variables stockant les entrées de l'utilisateur
-  const [url_value, set_url_Value] = React.useState('');	
+  const [url_value, set_url_Value] = React.useState('');
   //const [tags_value, set_tags_Value] = React.useState('');
-  
+
   let tags_value="";
-  
+
   // Expressions régulières pour vérifier ce que l'utilisateur rentre
   const tags_regex = new RegExp("^[a-zA-Z]+(,[a-za-zA-Z]+)*$");
   const image_regex = new RegExp(".(jpg|gif|png)$");
@@ -58,7 +66,7 @@ function Add(props) {
     //set_tags_Value(event.target.value);
 	tags_value=event.target.value;
   };
-  
+
   // Fonctions pour ajouter et chercher une image
   const addImage = (event) => {
 	event.preventDefault();
@@ -71,10 +79,10 @@ function Add(props) {
 	} else {
 		console.log("bad url or bad tags")
 	}
-	
+
 	console.log(Images.find().fetch());
   }
-  
+
 
   return (
   <>
@@ -87,7 +95,7 @@ function Add(props) {
 			  variant="outlined"
 			  onChange={handle_url_Change}
 			/>
-			
+
 			<TextField
 			  className={classes.root}
 			  label="Image tags"
@@ -96,10 +104,10 @@ function Add(props) {
 			  variant="outlined"
 			  onChange={handle_tags_Change}
 			/>
-			
+
 			<Button className={classes.button} onClick={()=>{addImage(event)}}variant="contained" disableRipple>Save to DB</Button>
-		
-		</div>	
+
+		</div>
 		{image_regex.test(url_value)?<img className={classes.image} src={url_value} alt="Invalid image URL" width="500"/>:null}
 	</div>
 	</>
