@@ -67,10 +67,13 @@ function Search(props) {
     set_search_tags_Value(event.target.value)
   };
 
+  const unavailable_image = "https://thumbs.dreamstime.com/b/image-unavailable-icon-simple-illustration-vector-stock-174927559.jpg"
+
 
   let search_results = [];
   if (valid_search_query) {
 	search_results = Images.find().fetch()
+	console.log(search_results)
   }
 
 
@@ -98,7 +101,7 @@ function Search(props) {
 						<CardActionArea disableRipple>
 							<CardMedia
 								className={classes.media}
-								image={obj.url?obj.url:"https://previews.123rf.com/images/viktor92/viktor921910/viktor92191000105/132914141-abstract-transparent-background.jpg"}
+								image={obj.url?obj.url:unavailable_image}
 							/>
 							<CardContent>
 								<Typography variant="body2" color="textSecondary">
