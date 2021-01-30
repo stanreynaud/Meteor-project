@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
+// Ce composant gère la page de modification des tags
 function Tags(props) {
 
   const classes = useStyles();

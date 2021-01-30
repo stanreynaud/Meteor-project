@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // Ce composant gère la page d'ajout d'une image
-
 function Add(props) {
   const classes = useStyles();
 
@@ -43,7 +42,7 @@ function Add(props) {
   let tags_value="";
 
   // Expressions régulières pour vérifier ce que l'utilisateur rentre
-  const tags_regex = new RegExp("^[a-zA-Z]+(,[a-za-zA-Z]+)*$");
+  const tags_regex = new RegExp("^$|[a-zA-Z]+(,[a-za-zA-Z]+)*$");
   const image_regex = new RegExp(".(jpg|gif|png)$");
 
   // Fonctions pour actualiser les variables quand les entrées changent
@@ -55,8 +54,12 @@ function Add(props) {
   };
 
   const addImage = () => {
-    // Insert in DB
-    console.log(Images.find().fetch());
+    if(tags_regex.test(tags_value) && image_regex.test(url_value)) {
+      // Insert in DB
+      tags_value="";
+      set_url_Value("");
+      console.log(Images.find().fetch());
+    }
   }
 
   return (
@@ -69,6 +72,7 @@ function Add(props) {
           label="Image URL"
           variant="outlined"
           onChange={handle_url_Change}
+          helperText={"Link must end with .png .jpg or .gif"}
         />
         <TextField
           className={classes.root}
@@ -77,6 +81,7 @@ function Add(props) {
           multiline
           variant="outlined"
           onChange={handle_tags_Change}
+          helperText={"Tags must be words separated by ','"}
         />
         <Button className={classes.button} onClick={()=>{addImage()}}variant="contained" disableRipple>Save to DB</Button>
     </div>

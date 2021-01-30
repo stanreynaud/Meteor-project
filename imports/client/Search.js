@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
+// Ce composant gère la page de recherche d'une image
 function Search(props) {
   const classes = useStyles();
 
@@ -89,7 +89,7 @@ function Search(props) {
 				variant="outlined"
 				value={search_tags_value}
 				onChange={(event) => set_search_tags_value(event.target.value)}
-				helperText={valid_search_query?null:"Tags must be words separated by ','"}
+				helperText={"Tags must be words separated by ','"}
 			/>
 		</div>
 	</div>
