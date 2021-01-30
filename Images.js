@@ -28,7 +28,7 @@ import SimpleSchema from 'simpl-schema';
   //   max: 100,
   // },
   Images.schema = new SimpleSchema({
-  name: {type: String},
+  url: {type: String},
   tagsArray: {type: Number, defaultValue: 0},
 });
 // });

@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 const img = {
-  name: 'My list',
+  url: 'My list',
   tagsArray: 3
 };
 
