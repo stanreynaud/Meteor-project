@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-import {Images} from '/Images';
+import {Images} from '/database/Images';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -36,12 +36,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const img = {
-  url: 'My list',
-  tagsArray: 3
-};
 
-Images.schema.validate(img);
 
 
 function Add(props) {
@@ -70,15 +65,19 @@ function Add(props) {
   // Fonctions pour ajouter et chercher une image
   const addImage = (event) => {
 	event.preventDefault();
-	if(tags_regex.test(tags_value) && image_regex.test(url_value)) {
-		console.log(tags_value)
-		Images.insert({
-			url: url_value,
-			tags: tags_value,
-		});
-	} else {
-		console.log("bad url or bad tags")
-	}
+	// if(tags_regex.test(tags_value) && image_regex.test(url_value)) {
+		// console.log(tags_value)
+    const img = {
+      url: url_value,
+      tagsArray: 0
+    };
+    Images.schema.validate(img);
+		Images.insert(
+			Images.schema
+		);
+	// } else {
+	// 	console.log("bad url or bad tags")
+	// }
 
 	console.log(Images.find().fetch());
   }

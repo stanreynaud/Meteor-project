@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-import {Images} from '/Images';
+import {Images} from '/database/Images';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -56,10 +56,10 @@ const useStyles = makeStyles((theme) => ({
 
 function Search(props) {
   const classes = useStyles();
-  
+
   // Variables stockant les entrées de l'utilisateur
   const [search_tags_value, set_search_tags_value] = React.useState("");
-  
+
   // Expressions régulières pour vérifier ce que l'utilisateur rentre
   const tags_regex = new RegExp("^$|[a-zA-Z]+(,[a-za-zA-Z]+)*$")
   const valid_search_query = tags_regex.test(search_tags_value)
@@ -68,13 +68,13 @@ function Search(props) {
   const handle_search_tags_Change = (event) => {
     set_search_tags_Value(event.target.value)
   };
-  
-  
+
+
   let search_results = [];
   if (valid_search_query) {
 	search_results = Images.find().fetch()
   }
-  
+
 
   return (
   <>
@@ -84,13 +84,13 @@ function Search(props) {
 			<TextField id="outlined-basic"
 				style={{width:"450px"}}
 				className={classes.root}
-				label="Search tags" 
-				variant="outlined" 
+				label="Search tags"
+				variant="outlined"
 				value={search_tags_value}
 				onChange={(event) => set_search_tags_value(event.target.value)}
 				helperText={valid_search_query?null:"Tags must be words separated by ','"}
 			/>
-			
+
 		</div>
 	</div>
 		<Grid container className={classes.grid}>
@@ -114,7 +114,7 @@ function Search(props) {
 				</Grid>
 			))}
 		</Grid>
-	
+
   </>
   );
 }

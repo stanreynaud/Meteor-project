@@ -1,3 +1,3 @@
 import { Meteor } from 'meteor/meteor';
-import {Images} from '/Images';
-import {Tags} from '/Tags';
+import {Images} from '/database/Images';
+import {Tags} from '/database/Tags';

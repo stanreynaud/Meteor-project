@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-import {Images} from '/Images';
+import {Images} from '/database/Images';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,9 +37,9 @@ const useStyles = makeStyles((theme) => ({
 
 
 function Tags(props) {
-	
+
   const classes = useStyles();
-  
+
   return (
   <>
 
