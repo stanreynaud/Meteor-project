@@ -7,8 +7,6 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-
 import {Images} from '/database/Images';
 
 
@@ -90,31 +88,29 @@ function Search(props) {
 				onChange={(event) => set_search_tags_value(event.target.value)}
 				helperText={valid_search_query?null:"Tags must be words separated by ','"}
 			/>
-
 		</div>
 	</div>
-		<Grid container className={classes.grid}>
-			{search_results.map(obj => (
-				<Grid item xs={3} className={classes.card} key={obj._id}>
-					<div>
-						<Card>
-							<CardActionArea disableRipple>
-								<CardMedia
-									className={classes.media}
-									image={obj.url?obj.url:"https://previews.123rf.com/images/viktor92/viktor921910/viktor92191000105/132914141-abstract-transparent-background.jpg"}
-								/>
-								<CardContent>
-									<Typography variant="body2" color="textSecondary">
-									  {obj.tags}
-									</Typography>
-								</CardContent>
-							</CardActionArea>
-						</Card>
-					</div>
-				</Grid>
-			))}
-		</Grid>
-
+	<Grid container className={classes.grid}>
+		{search_results.map(obj => (
+			<Grid item xs={3} className={classes.card} key={obj._id}>
+				<div>
+					<Card>
+						<CardActionArea disableRipple>
+							<CardMedia
+								className={classes.media}
+								image={obj.url?obj.url:"https://previews.123rf.com/images/viktor92/viktor921910/viktor92191000105/132914141-abstract-transparent-background.jpg"}
+							/>
+							<CardContent>
+								<Typography variant="body2" color="textSecondary">
+									{obj.tags}
+								</Typography>
+							</CardContent>
+						</CardActionArea>
+					</Card>
+				</div>
+			</Grid>
+		))}
+	</Grid>
   </>
   );
 }
