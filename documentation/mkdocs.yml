@@ -1,0 +1,5 @@
+site_name: Image Server Documentation
+nav:
+    - Home: index.md
+    - Frontend: frontend.md
+    - Backend: backend.md
