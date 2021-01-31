@@ -39,7 +39,7 @@ function Add(props) {
 
   // Variables stockant les entrées de l'utilisateur
   const [url_value, set_url_Value] = React.useState('');
-  let tags_value="";
+  const [tags_value, set_tags_value] = React.useState('');
 
   // Expressions régulières pour vérifier ce que l'utilisateur rentre
   const tags_regex = new RegExp("^$|[a-zA-Z]+(,[a-za-zA-Z]+)*$");
@@ -50,13 +50,13 @@ function Add(props) {
     set_url_Value(event.target.value);
   };
   const handle_tags_Change = (event) => {
-	  tags_value=event.target.value;
+	  set_tags_value(event.target.value);
   };
 
   const addImage = () => {
     if(tags_regex.test(tags_value) && image_regex.test(url_value)) {
       // Insert in DB
-      tags_value="";
+      set_tags_value("");
       set_url_Value("");
       console.log(Images.find().fetch());
     }
@@ -71,6 +71,7 @@ function Add(props) {
           className={classes.root}
           label="Image URL"
           variant="outlined"
+          value = {url_value}
           onChange={handle_url_Change}
           helperText={"Link must end with .png .jpg or .gif"}
         />
@@ -80,6 +81,7 @@ function Add(props) {
           rows={4}
           multiline
           variant="outlined"
+          value = {tags_value}
           onChange={handle_tags_Change}
           helperText={"Tags must be words separated by ','"}
         />
