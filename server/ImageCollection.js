@@ -39,7 +39,7 @@ class ImageCollection extends Mongo.Collection {
         //   let in = true;
         //     tabTag.push(tabTagTmp[i])
       });
-      name = (!in ? TagsCollection.insert(lastId,item) : null);
+      name = (!in ? TagsCollection.insert(lastId + 5,item) : null);
     });
   }
 
