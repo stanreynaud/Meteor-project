@@ -72,6 +72,7 @@ function Search(props) {
 
   let search_results = [];
   if (valid_search_query) {
+	// Remplacer par un appel à la fonction de recherche d'image avec search_tags_value
 	search_results = Images.find().fetch()
 	console.log(search_results)
   }
