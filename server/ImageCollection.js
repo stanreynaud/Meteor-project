@@ -1,12 +1,14 @@
 import {Images} from '/database/Images';
 import {Tags} from '/database/Tags';
-import {TagsCollection} from '/server/TagsCollection'
+import {TagsCollection} from './server/TagsCollection'
 
-class ImageCollection extends Mongo.Collection {
+// export default ImageCollection;
 
-  insert(url,tags){
+export default class ImageCollection extends Mongo.Collection { // Utilisation d'une clalle hérité de la collection Mongo
+
+  insert(url,tags){ // fonction d'insertion d'une image
     let tabTag = tags.split(',');
-    const img {
+    const img = {
       url: url,
       tags: tabTag
     };
@@ -17,32 +19,25 @@ class ImageCollection extends Mongo.Collection {
 
   creationTag(tag) {
 
-    let tabTagTmp = tags.split(',');
-    let allT = Tags.find().fetch();
-    let allI = Images.find().fetch();
+    let tabTagTmp = tags.split(','); // Découpage du string de tags
+    let allT = Tags.find().fetch(); // Récupération de tous les tags dans la BDD
 
-    let i;
-    let taille  = all.length;
+    let taille  = allT.length;
     let place = taille-1
     let newTabTags = [];
-    let in;
+    let dans;
     let name;
     let lastT = allT[place];
     let lastId = lastT['id'];
-    tabTagTmp.forEach((item) => {
+    tabTagTmp.forEach((item) => { // Parcour du tabTagTmp
       name = '';
-      in = true;
+      dans = true;
       i = 0;
-      allT.forEach((itemT) => {
-        in = (item == itemT['name'] ? true : false);
-        // newTabTags.push(name);
-        //   let in = true;
-        //     tabTag.push(tabTagTmp[i])
+      allT.forEach((itemT) => { // Parcour de la BDD
+        dans = (item == itemT['name'] ? true : false);
       });
-      name = (!in ? TagsCollection.insert(lastId + 5,item) : null);
+      name = (!dans ? TagsCollection.insert(lastId + 5,item) : null); // Si le tags saisit n'est pas dans le tableau de tags nous l'inseront avec un id incrementé de 5 par rapport au dernier id
     });
   }
-
-  //
 
 }
